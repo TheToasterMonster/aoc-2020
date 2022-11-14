@@ -33,9 +33,7 @@ def expand_rule(number: int) -> None:
 
 expand_rule(0)
 count = 0
-max_message_len = 0
 for message in messages:
-    max_message_len = max(max_message_len, len(message))
     if message in expanded_rules[0]:
         count += 1
 print(f'Part 1: {count}')
