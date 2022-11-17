@@ -10,16 +10,13 @@ with open(INPUT_FILE) as f:
             lines.append(line)
         images[idNum] = lines
 
-def getSides(image: list[str]):
+def getSides(image: list[str]) -> list[str]:
     top = image[0]
     bot = image[-1]
     left = "".join(row[0] for row in image)
     right = "".join(row[-1] for row in image)
     sides = [top, bot, left, right]
     return sides + list(map(lambda s: "".join(reversed(s)), sides))
-
-print("\n".join(images[3529]))
-print(getSides(images[3529]))
 
 rowCounts: dict[str, list[int]] = {}
 for imageID in images:
@@ -46,3 +43,25 @@ prod = 1
 for i in corners:
     prod *= i
 print(f'Part 1: {prod}')
+
+
+seaMonster = "                  # \n#    ##    ##    ###\n #  #  #  #  #  #   ".split('\n')
+monsterHeight = len(seaMonster)
+monsterWidth = len(seaMonster[0])
+seaMonster = [(pr[0], i) for pr in enumerate(seaMonster) for i, c in enumerate(pr[1]) if c == '#']
+
+def checkSeaMonster(image: list[str]) -> int:
+    height = len(image)
+    width = len(image[0])
+    count = 0
+    for i in range(height - monsterHeight):
+        for j in range(width - monsterWidth):
+            found: bool = True
+            for di, dj in seaMonster:
+                if image[i + di][j + dj] != '#':
+                    found = False
+                    break
+            if found:
+                count += 1
+    return count
+
